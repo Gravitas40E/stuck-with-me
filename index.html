@@ -1,32 +1,681 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Stuck with Me</title>
-    <style>
-        /* Add your styles here */
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>💕 Stuck With You</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pink:       #ff4d6d;
+  --pink-light: #ff85a1;
+  --purple:     #c77dff;
+  --bg:         #0b001c;
+  --card-bg:    rgba(16, 3, 30, 0.78);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  overflow: hidden;
+  color: #f9fafb;
+  position: relative;
+}
+
+/* ── Star canvas ── */
+#starfield { position: fixed; inset: 0; z-index: 0; }
+
+/* ── Colour nebula overlay ── */
+.nebula {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 18% 75%, rgba(107,15,58,.55)  0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 85% 15%, rgba(90,0,160,.35)   0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,77,109,.06) 0%, transparent 70%);
+  animation: nebulaDrift 14s ease-in-out infinite alternate;
+}
+@keyframes nebulaDrift {
+  from { opacity: .8; transform: scale(1); }
+  to   { opacity: 1;  transform: scale(1.04); }
+}
+
+/* ── Floating particles ── */
+.fp {
+  position: fixed; pointer-events: none; z-index: 2;
+  animation: floatUp linear infinite; opacity: 0;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(108vh) rotate(0deg)   scale(.8); opacity: 0; }
+  8%   { opacity: .6; }
+  92%  { opacity: .4; }
+  100% { transform: translateY(-15vh)  rotate(420deg) scale(1.1); opacity: 0; }
+}
+
+/* ── Card ── */
+.card {
+  position: relative; z-index: 10;
+  background: var(--card-bg);
+  border: 1px solid rgba(255,100,160,.22);
+  backdrop-filter: blur(32px) saturate(1.9);
+  -webkit-backdrop-filter: blur(32px) saturate(1.9);
+  padding: 52px 40px 44px;
+  border-radius: 32px;
+  text-align: center;
+  max-width: 490px; width: 92%;
+  box-shadow:
+    0 32px 80px rgba(0,0,0,.75),
+    inset 0 1px 0 rgba(255,180,210,.12),
+    0 0 0 1px rgba(255,100,160,.07) inset;
+  animation: cardIn .85s cubic-bezier(.34,1.56,.64,1) both;
+  transition: transform .35s ease;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(.65) translateY(40px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0);    }
+}
+
+/* Animated border glow */
+.card::before {
+  content: '';
+  position: absolute; inset: -1px; border-radius: 33px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 30%, rgba(255,77,109,.45) 50%, transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+  animation: spin 5s linear infinite;
+  pointer-events: none;
+}
+@property --angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+@keyframes spin { to { --angle: 360deg; } }
+
+/* Outer glow blob */
+.card::after {
+  content: '';
+  position: absolute; inset: -20px; border-radius: 50px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255,77,109,.18) 0%, transparent 70%);
+  pointer-events: none; z-index: -1;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100% { opacity: .6; transform: scale(1); }
+  50%      { opacity: 1;  transform: scale(1.05); }
+}
+
+/* ── Top emoji ── */
+.emoji-top {
+  font-size: 2.9rem; display: block; margin-bottom: 14px;
+  animation: heartBeat 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 14px rgba(255,77,109,.9));
+}
+@keyframes heartBeat {
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 14px rgba(255,77,109,.9)); }
+  14%      { transform: scale(1.15); filter: drop-shadow(0 0 26px rgba(255,77,109,1));  }
+  28%      { transform: scale(1);    }
+  42%      { transform: scale(1.1);  }
+}
+
+/* ── Question text ── */
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 2rem; line-height: 1.4;
+  min-height: 3.2rem;
+  margin-bottom: 8px;
+  color: #fff;
+  text-shadow: 0 0 28px rgba(255,140,170,.55);
+}
+#qtext { display: inline; }
+.cursor {
+  display: inline-block;
+  width: 2.5px; height: .85em;
+  background: #ffb3c6;
+  vertical-align: -.08em;
+  margin-left: 2px;
+  animation: blink .72s step-end infinite;
+  border-radius: 2px;
+}
+.cursor.hidden { display: none; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── Progress dots ── */
+.dots {
+  display: flex; justify-content: center; gap: 8px;
+  margin-bottom: 28px;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  transition: background .4s, transform .4s, box-shadow .4s;
+}
+.dot.active {
+  background: var(--pink-light); transform: scale(1.35);
+  box-shadow: 0 0 10px var(--pink);
+}
+.dot.done {
+  background: var(--purple);
+  box-shadow: 0 0 8px var(--purple);
+}
+
+/* ── Button row ── */
+.btn-row { display: flex; justify-content: center; gap: 22px; }
+
+button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600; letter-spacing: .04em;
+  border: none; border-radius: 999px;
+  cursor: pointer; position: relative; overflow: hidden;
+}
+
+/* YES */
+#yes {
+  font-size: 16px; padding: 15px 38px;
+  background: linear-gradient(135deg, #ff4d6d 0%, #ff85a1 55%, #ffb3c6 100%);
+  background-size: 200% 200%;
+  color: #fff;
+  box-shadow: 0 0 24px rgba(255,80,120,.75), 0 5px 18px rgba(255,77,109,.45);
+  transition: transform .15s, box-shadow .2s, font-size .35s cubic-bezier(.34,1.56,.64,1);
+  animation: yesGlow 2.6s ease-in-out infinite;
+}
+@keyframes yesGlow {
+  0%,100% { box-shadow: 0 0 24px rgba(255,80,120,.75), 0 5px 18px rgba(255,77,109,.4); }
+  50%      { box-shadow: 0 0 42px rgba(255,80,120,1),   0 8px 28px rgba(255,77,109,.6); }
+}
+#yes:hover { transform: scale(1.09); animation: none; box-shadow: 0 0 50px rgba(255,80,120,1), 0 8px 32px rgba(255,77,109,.65); }
+#yes:active { transform: scale(.95); }
+
+/* Ripple */
+.ripple {
+  position: absolute; border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  transform: scale(0); pointer-events: none;
+  animation: rippleAnim .65s linear;
+}
+@keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+/* NO */
+#no {
+  font-size: 15px; padding: 14px 30px;
+  background: rgba(8,3,20,.85);
+  color: rgba(255,255,255,.6);
+  border: 1px solid rgba(255,255,255,.1);
+  position: fixed;
+  transition: left .32s cubic-bezier(.22,1,.36,1),
+              top  .32s cubic-bezier(.22,1,.36,1),
+              font-size .4s, opacity .5s, transform .15s;
+}
+#no:active { transform: scale(.93); }
+
+/* NO-tip */
+#no-tip {
+  position: fixed; z-index: 999;
+  background: rgba(18,4,35,.95);
+  border: 1px solid rgba(255,100,160,.45);
+  border-radius: 14px; padding: 7px 16px;
+  font-size: .8rem; color: #ff85a1;
+  pointer-events: none; white-space: nowrap;
+  opacity: 0; transition: opacity .25s;
+  box-shadow: 0 4px 20px rgba(255,77,109,.2);
+}
+#no-tip.show { opacity: 1; }
+
+/* Card shake */
+.card.shake {
+  animation: cardShake .42s ease both !important;
+}
+@keyframes cardShake {
+  0%,100% { transform: translateX(0) rotate(0); }
+  18%     { transform: translateX(-7px) rotate(-1.2deg); }
+  36%     { transform: translateX(7px)  rotate(1.2deg);  }
+  54%     { transform: translateX(-4px) rotate(-.6deg);  }
+  72%     { transform: translateX(4px)  rotate(.6deg);   }
+}
+
+/* ── Final screen ── */
+#final { display: none; }
+
+.final-emoji {
+  font-size: 3.6rem; display: block; margin-bottom: 14px;
+  filter: drop-shadow(0 0 18px rgba(255,77,109,.9));
+  animation: bounceIn .75s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes bounceIn {
+  from { opacity: 0; transform: scale(.25) rotate(-15deg); }
+  to   { opacity: 1; transform: scale(1)   rotate(0deg);   }
+}
+.final-title {
+  font-family: 'Dancing Script', cursive; font-weight: 700;
+  font-size: 2rem; margin-bottom: 16px;
+  background: linear-gradient(135deg, #ffb3c6 0%, #c77dff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeUp .55s .25s ease both;
+}
+.final-body {
+  font-size: .97rem; color: rgba(255,255,255,.87);
+  line-height: 1.9; margin-bottom: 22px;
+  animation: fadeUp .55s .45s ease both;
+}
+.final-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff4d6d, #c77dff);
+  color: #fff; font-size: .78rem; letter-spacing: .09em;
+  padding: 7px 22px; border-radius: 999px; font-weight: 700;
+  animation: fadeUp .55s .65s ease both, badgePulse 2.2s 1.2s ease-in-out infinite;
+  box-shadow: 0 4px 22px rgba(255,77,109,.5);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+@keyframes badgePulse {
+  0%,100% { box-shadow: 0 4px 22px rgba(255,77,109,.5); }
+  50%      { box-shadow: 0 4px 34px rgba(199,125,255,.75); }
+}
+
+/* ── Floating hearts / sparkles ── */
+.heart {
+  position: fixed; pointer-events: none; z-index: 998;
+  animation: heartBurst ease-out forwards;
+}
+@keyframes heartBurst {
+  0%   { opacity: 1; transform: translate(0,0) scale(.4) rotate(0deg); }
+  100% { opacity: 0; transform: translate(var(--dx),var(--dy)) scale(1.5) rotate(var(--dr)); }
+}
+.sparkle {
+  position: fixed; border-radius: 50%; pointer-events: none; z-index: 997;
+  animation: sparkleBurst ease-out forwards;
+}
+@keyframes sparkleBurst {
+  0%   { opacity: 1; transform: translate(0,0) scale(1.3); }
+  100% { opacity: 0; transform: translate(var(--sx),var(--sy)) scale(0); }
+}
+</style>
 </head>
 <body>
-    <div id="app">
-        <button id="no">No</button>
-    </div>
-    <script>
-        function placeNo() {
-            const button = document.getElementById('no');
-            const viewportHeight = window.innerHeight;
-            const viewportWidth = window.innerWidth;
 
-            // Calculate the position to keep the button inside the viewport
-            const top = Math.min(viewportHeight - button.offsetHeight, 100); // Clamped position
-            const left = Math.min(viewportWidth - button.offsetWidth, 100); // Clamped position
+<canvas id="starfield"></canvas>
+<div class="nebula"></div>
+<div id="no-tip"></div>
 
-            button.style.position = 'absolute';
-            button.style.top = top + 'px';
-            button.style.left = left + 'px';
-        }
+<div class="card">
+  <span class="emoji-top">💖</span>
+  <h1 id="question"><span id="qtext"></span><span class="cursor" id="cursor"></span></h1>
+  <div class="dots" id="dots"></div>
 
-        // Call placeNo on load and resize events
-        window.onload = placeNo;
-        window.onresize = placeNo;
-    </script>
+  <div class="btn-row">
+    <button id="yes">Yes 💕</button>
+    <button id="no">No</button>
+  </div>
+
+  <div id="final">
+    <span class="final-emoji">🥰</span>
+    <p class="final-title">Officially stuck together!</p>
+    <p class="final-body">
+      No refunds.<br>
+      No returns.<br>
+      Just you and me, forever. 💗
+    </p>
+    <span class="final-badge">✨ Certified Ride-or-Die ✨</span>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   STAR FIELD
+══════════════════════════════════════════ */
+const cv = document.getElementById('starfield');
+const cx = cv.getContext('2d');
+let stars = [];
+
+function resizeCv() {
+  cv.width  = window.innerWidth;
+  cv.height = window.innerHeight;
+}
+
+function mkStars() {
+  stars = Array.from({ length: 180 }, () => ({
+    x:     Math.random() * cv.width,
+    y:     Math.random() * cv.height,
+    r:     Math.random() * 1.4 + .25,
+    base:  Math.random() * .5 + .1,
+    amp:   Math.random() * .45 + .15,
+    spd:   Math.random() * .0008 + .0003,
+    phase: Math.random() * Math.PI * 2,
+    hue:   Math.random() < .15 ? 310 : 0,   // occasional pink star
+  }));
+}
+
+let lastT = 0;
+function drawStars(t) {
+  cx.clearRect(0, 0, cv.width, cv.height);
+  stars.forEach(s => {
+    const a = s.base + s.amp * Math.abs(Math.sin(s.phase + t * s.spd));
+    cx.beginPath();
+    cx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    cx.fillStyle = s.hue
+      ? `hsla(${s.hue},80%,85%,${a})`
+      : `rgba(255,235,245,${a})`;
+    cx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+
+resizeCv(); mkStars(); requestAnimationFrame(drawStars);
+window.addEventListener('resize', () => { resizeCv(); mkStars(); });
+
+/* ══════════════════════════════════════════
+   FLOATING BACKGROUND PARTICLES
+══════════════════════════════════════════ */
+const MOJI = ["❤️","💕","💖","💗","✨","🌸","💫","🦋","💝","🌷","⭐","🩷"];
+for (let i = 0; i < 32; i++) {
+  const el = document.createElement('div');
+  el.className = 'fp';
+  el.textContent = MOJI[Math.floor(Math.random() * MOJI.length)];
+  el.style.cssText = `
+    left:${Math.random()*100}vw;
+    font-size:${Math.random()*16+7}px;
+    animation-duration:${Math.random()*9+8}s;
+    animation-delay:${Math.random()*14}s;
+  `;
+  document.body.appendChild(el);
+}
+
+/* ══════════════════════════════════════════
+   DATA
+══════════════════════════════════════════ */
+const QUESTIONS = [
+  "Are you stuck with me now?",
+  "Are you REALLY sure? 🥺",
+  "Think very carefully... 🤔",
+  "Still yes? Like, for real?",
+  "Okay last chance to back out…",
+  "Alright then… 🫶"
+];
+
+const NO_TIPS = [
+  "Nope, wrong button 🙃",
+  "That one's decorative 🎀",
+  "Nice try, babe~",
+  "The cursor slipped, right?",
+  "Not an option 💅",
+  "Haha, no. ✨",
+  "Glitch! Try again 👀",
+  "Bold move. Wrong move.",
+  "That button's on vacation.",
+  "lol no 💗"
+];
+
+/* Web Audio ascending chime notes (C-major scale) */
+const CHIME_FREQ = [523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 1046.5];
+
+/* ══════════════════════════════════════════
+   DOM REFS & STATE
+══════════════════════════════════════════ */
+const yes       = document.getElementById('yes');
+const no        = document.getElementById('no');
+const qtextEl   = document.getElementById('qtext');
+const cursorEl  = document.getElementById('cursor');
+const finalDiv  = document.getElementById('final');
+const noTip     = document.getElementById('no-tip');
+const dotsEl    = document.getElementById('dots');
+const card      = document.querySelector('.card');
+
+let clicks    = 0;
+let yesSize   = 16;
+let done      = false;
+let tipIdx    = 0;
+let noEscapes = 0;
+let audioCtx  = null;
+let typeTimer = null;
+
+/* ══════════════════════════════════════════
+   PROGRESS DOTS
+══════════════════════════════════════════ */
+QUESTIONS.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  dotsEl.appendChild(d);
+});
+
+function updateDots(idx) {
+  dotsEl.querySelectorAll('.dot').forEach((d, i) => {
+    d.className = 'dot';
+    if (i < idx)  d.classList.add('done');
+    if (i === idx) d.classList.add('active');
+  });
+}
+
+/* ══════════════════════════════════════════
+   TYPEWRITER
+══════════════════════════════════════════ */
+function typewrite(text, speed = 40) {
+  clearInterval(typeTimer);
+  qtextEl.textContent = '';
+  cursorEl.classList.remove('hidden');
+  let i = 0;
+  typeTimer = setInterval(() => {
+    qtextEl.textContent += text[i];
+    i++;
+    if (i >= text.length) {
+      clearInterval(typeTimer);
+      // Keep cursor blinking after done
+    }
+  }, speed);
+}
+
+typewrite(QUESTIONS[0]);
+
+/* ══════════════════════════════════════════
+   PLACE NO BUTTON (beside card, or below on mobile)
+══════════════════════════════════════════ */
+function placeNo() {
+  const r = card.getBoundingClientRect();
+  const btnW = no.offsetWidth  || 90;
+  const btnH = no.offsetHeight || 50;
+  let x = r.right + 22;
+  let y = r.bottom - btnH - 4;
+  if (x + btnW > window.innerWidth - 10) {
+    x = r.left + r.width / 2 + 14;
+    y = r.bottom + 14;
+  }
+  no.style.left = x + 'px';
+  no.style.top  = y + 'px';
+}
+window.addEventListener('load',   placeNo);
+window.addEventListener('resize', () => { if (no.style.display !== 'none') placeNo(); });
+
+/* ══════════════════════════════════════════
+   NO RUNS AWAY
+══════════════════════════════════════════ */
+function moveNo() {
+  noEscapes++;
+  const pad = 24, w = no.offsetWidth, h = no.offsetHeight;
+  const x = Math.random() * (window.innerWidth  - w - pad * 2) + pad;
+  const y = Math.random() * (window.innerHeight - h - pad * 2) + pad;
+  no.style.left    = x + 'px';
+  no.style.top     = y + 'px';
+  // Gets tinier and more transparent the more it escapes
+  no.style.fontSize = Math.max(9, 15 - noEscapes * .7) + 'px';
+  no.style.opacity  = Math.max(.15, .65 - noEscapes * .045);
+
+  const tip = NO_TIPS[tipIdx % NO_TIPS.length]; tipIdx++;
+  noTip.textContent = tip;
+  noTip.style.left  = Math.min(x, window.innerWidth - 210) + 'px';
+  noTip.style.top   = Math.max(y - 44, 8) + 'px';
+  noTip.classList.add('show');
+  clearTimeout(noTip._t);
+  noTip._t = setTimeout(() => noTip.classList.remove('show'), 1500);
+}
+
+document.addEventListener('mousemove', e => {
+  if (done) return;
+  const r  = no.getBoundingClientRect();
+  const dx = e.clientX - (r.left + r.width  / 2);
+  const dy = e.clientY - (r.top  + r.height / 2);
+  if (Math.sqrt(dx*dx + dy*dy) < 115) moveNo();
+});
+
+no.addEventListener('touchstart', e => { e.preventDefault(); moveNo(); }, { passive: false });
+
+/* ══════════════════════════════════════════
+   WEB AUDIO CHIMES  (no files needed)
+══════════════════════════════════════════ */
+function playChime(freq, vol = .18, dur = .55) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc  = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const rev  = audioCtx.createGain(); // simple "reverb" via 2nd delayed copy
+    osc.connect(gain);   gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + dur);
+    osc.start(); osc.stop(audioCtx.currentTime + dur);
+
+    // Harmonic overtone for richness
+    const osc2 = audioCtx.createOscillator();
+    const g2   = audioCtx.createGain();
+    osc2.connect(g2); g2.connect(audioCtx.destination);
+    osc2.type = 'sine'; osc2.frequency.value = freq * 2;
+    g2.gain.setValueAtTime(vol * .3, audioCtx.currentTime);
+    g2.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + dur * .7);
+    osc2.start(); osc2.stop(audioCtx.currentTime + dur * .7);
+  } catch(e) {}
+}
+
+function playFanfare() {
+  const notes = [783.99, 880.00, 1046.5, 1318.51];
+  notes.forEach((n, i) => setTimeout(() => playChime(n, .22, .6), i * 160));
+}
+
+/* ══════════════════════════════════════════
+   RIPPLE
+══════════════════════════════════════════ */
+function addRipple(btn, e) {
+  const r    = btn.getBoundingClientRect();
+  const size = Math.max(btn.offsetWidth, btn.offsetHeight) * 2.2;
+  const x    = ((e && e.clientX) || r.left + r.width  / 2) - r.left - size / 2;
+  const y    = ((e && e.clientY) || r.top  + r.height / 2) - r.top  - size / 2;
+  const rip  = document.createElement('span');
+  rip.className = 'ripple';
+  rip.style.cssText = `width:${size}px;height:${size}px;left:${x}px;top:${y}px`;
+  btn.appendChild(rip);
+  setTimeout(() => rip.remove(), 700);
+}
+
+/* ══════════════════════════════════════════
+   BURST FX
+══════════════════════════════════════════ */
+const HEARTS  = ["❤️","💕","💖","💗","💝","🩷","✨","🌸","🌷","💞","⭐"];
+const COLORS  = ["#ff85a1","#ffb3c6","#c77dff","#fffde7","#fff","#ff4d6d","#ffd6e7","#e0aaff"];
+
+function burst(cx, cy, count = 40) {
+  for (let i = 0; i < count; i++) {
+    const el    = document.createElement('div');
+    el.className = 'heart';
+    el.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
+    const angle = Math.random() * Math.PI * 2;
+    const dist  = Math.random() * 300 + 60;
+    el.style.cssText = `
+      left:${cx}px; top:${cy}px;
+      font-size:${Math.random()*15+9}px;
+      --dx:${Math.cos(angle)*dist}px;
+      --dy:${Math.sin(angle)*dist}px;
+      --dr:${Math.random()*420-210}deg;
+      animation-duration:${Math.random()*.85+.95}s;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2100);
+  }
+  for (let i = 0; i < 80; i++) {
+    const sp  = document.createElement('div');
+    sp.className = 'sparkle';
+    const angle = Math.random() * Math.PI * 2;
+    const dist  = Math.random() * 240 + 30;
+    const size  = Math.random() * 7 + 2;
+    sp.style.cssText = `
+      left:${cx}px; top:${cy}px;
+      width:${size}px; height:${size}px;
+      background:${COLORS[Math.floor(Math.random()*COLORS.length)]};
+      --sx:${Math.cos(angle)*dist}px;
+      --sy:${Math.sin(angle)*dist}px;
+      animation-duration:${Math.random()*.5+.55}s;
+    `;
+    document.body.appendChild(sp);
+    setTimeout(() => sp.remove(), 1400);
+  }
+}
+
+/* ══════════════════════════════════════════
+   YES CLICK LOGIC
+══════════════════════════════════════════ */
+yes.addEventListener('click', e => {
+  if (done) return;
+  addRipple(yes, e);
+  playChime(CHIME_FREQ[Math.min(clicks, CHIME_FREQ.length - 1)]);
+
+  const r = yes.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, 22);
+
+  // Card happy shake
+  card.classList.remove('shake');
+  void card.offsetWidth; // reflow trick
+  card.classList.add('shake');
+  setTimeout(() => card.classList.remove('shake'), 450);
+
+  clicks++;
+  yesSize = Math.min(yesSize + 5, 48);
+  yes.style.fontSize = yesSize + 'px';
+
+  updateDots(Math.min(clicks, QUESTIONS.length - 1));
+
+  if (clicks < QUESTIONS.length) {
+    const q = document.getElementById('question');
+    q.style.opacity = '0';
+    q.style.transform = 'translateY(6px)';
+    q.style.transition = 'opacity .22s, transform .22s';
+    setTimeout(() => {
+      typewrite(QUESTIONS[clicks], 36);
+      q.style.opacity   = '1';
+      q.style.transform = 'translateY(0)';
+    }, 230);
+  }
+
+  if (clicks >= QUESTIONS.length - 1) {
+    done = true;
+    setTimeout(() => {
+      document.getElementById('question').style.display = 'none';
+      dotsEl.style.display        = 'none';
+      document.querySelector('.btn-row').style.display = 'none';
+      document.querySelector('.emoji-top').textContent = '🥰';
+      finalDiv.style.display = 'block';
+
+      const cr = card.getBoundingClientRect();
+      const bx = cr.left + cr.width / 2;
+      const by = cr.top  + cr.height / 2;
+      burst(bx, by, 100);
+      setTimeout(() => burst(bx, by, 75), 650);
+      setTimeout(() => burst(bx, by, 60), 1300);
+      setTimeout(() => burst(bx, by, 45), 2000);
+
+      playFanfare();
+
+      no.style.display    = 'none';
+      noTip.style.display = 'none';
+    }, 900);
+  }
+});
+</script>
 </body>
 </html>
