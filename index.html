@@ -4,22 +4,419 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stuck With Me</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #050510;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Starfield */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* Ambient glow orbs */
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-red {
+            width: 400px;
+            height: 400px;
+            background: rgba(180, 30, 60, 0.3);
+            top: -100px;
+            right: -100px;
+            animation: drift 8s infinite ease-in-out alternate;
+        }
+
+        .glow-blue {
+            width: 500px;
+            height: 500px;
+            background: rgba(30, 60, 180, 0.25);
+            bottom: -150px;
+            left: -150px;
+            animation: drift 10s infinite ease-in-out alternate-reverse;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+
+        /* Floating hearts */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: var(--size, 16px);
+            opacity: 0;
+            animation: floatUp var(--float-dur, 6s) var(--delay, 0s) infinite ease-in;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(20deg); opacity: 0; }
+        }
+
+        /* Card */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(10, 10, 30, 0.85);
+            border: 1px solid rgba(180, 120, 200, 0.3);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow:
+                0 0 40px rgba(180, 30, 120, 0.2),
+                0 0 80px rgba(30, 60, 180, 0.15),
+                inset 0 0 30px rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Question screen */
+        #question-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: background 0.4s, transform 0.4s;
+        }
+
+        .dot.active {
+            background: rgba(200, 130, 220, 0.9);
+            transform: scale(1.3);
+        }
+
+        .dot.done {
+            background: rgba(150, 100, 180, 0.6);
+        }
+
+        .question-text {
+            font-size: 1.45rem;
+            color: #e8d8f8;
+            line-height: 1.6;
+            min-height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 20px rgba(200, 150, 255, 0.4);
+            transition: opacity 0.5s ease;
+        }
+
+        .question-text.fade-out {
+            opacity: 0;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-yes {
+            padding: 0.75rem 2.5rem;
+            font-size: 1.05rem;
+            font-family: 'Georgia', serif;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #c44b8a, #7b3fc4);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(180, 60, 160, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.07);
+            box-shadow: 0 0 30px rgba(200, 80, 180, 0.7);
+        }
+
+        .btn-no {
+            padding: 0.75rem 2rem;
+            font-size: 1.05rem;
+            font-family: 'Georgia', serif;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            cursor: pointer;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.45);
+            transition: transform 0.15s, color 0.15s, border-color 0.15s;
+            position: absolute;
+            white-space: nowrap;
+        }
+
+        .btn-no:hover {
+            color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Final screen */
+        #final-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        #final-screen.visible {
+            display: flex;
+        }
+
+        .final-emoji {
+            font-size: 3rem;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .final-title {
+            font-size: 1.8rem;
+            color: #f0d8ff;
+            text-shadow: 0 0 20px rgba(220, 160, 255, 0.6);
+        }
+
+        .final-body {
+            font-size: 1rem;
+            color: rgba(220, 200, 240, 0.85);
+            line-height: 1.9;
+        }
+
+        .final-badge {
+            margin-top: 0.5rem;
+            padding: 0.55rem 1.4rem;
+            border: 1px solid rgba(220, 180, 255, 0.4);
+            border-radius: 50px;
+            color: rgba(230, 200, 255, 0.9);
+            font-size: 0.95rem;
+            letter-spacing: 0.06em;
+            background: rgba(180, 100, 220, 0.12);
+            box-shadow: 0 0 15px rgba(180, 80, 200, 0.2);
+        }
+    </style>
 </head>
 <body>
+    <!-- Ambient glow -->
+    <div class="glow-orb glow-red"></div>
+    <div class="glow-orb glow-blue"></div>
+
+    <!-- Stars -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Floating hearts -->
+    <div class="floating-hearts" id="hearts"></div>
+
+    <!-- Main card -->
     <div class="card">
-        <h1>Stuck With Me</h1>
-        <p>Let's explore the universe together!</p>
-        <script>
-            const QUESTIONS = [
-                "Across billions of stars… you still ended up here with me, right?",
-                "That feels a little like fate… doesn’t it?",
-                "So we’re not calling this coincidence anymore?",
-                "You’re staying for the next chapter too… right?",
-                "And the one after that?",
-                "…and the one after that?",
-                "Alright then. Forever?"
-            ];
-        </script>
+
+        <!-- Question screen -->
+        <div id="question-screen">
+            <div class="progress-dots" id="progress-dots"></div>
+            <p class="question-text" id="question-text"></p>
+            <div class="buttons" style="position:relative; min-height:60px; width:100%;">
+                <button class="btn-yes" id="btn-yes">Yes ✨</button>
+                <button class="btn-no" id="btn-no">No</button>
+            </div>
+        </div>
+
+        <!-- Final screen -->
+        <div id="final-screen">
+            <div class="final-emoji">🥰</div>
+            <h1 class="final-title">Officially stuck together.</h1>
+            <p class="final-body">
+                No refunds.<br>
+                No returns.<br>
+                Just you and me — permanently.
+            </p>
+            <div class="final-badge">✨ Certified Ride-or-Die ✨</div>
+        </div>
+
     </div>
+
+    <script>
+        const QUESTIONS = [
+            "Across billions of stars… you still ended up here with me, right?",
+            "That feels a little like fate… doesn't it?",
+            "So we're not calling this coincidence anymore?",
+            "You're staying for the next chapter too… right?",
+            "And the one after that?",
+            "…and the one after that?",
+            "Alright then, Sahar… forever?"
+        ];
+
+        // ── Starfield ────────────────────────────────────────────────────────────────────────
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 120; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            const size = Math.random() * 2.5 + 0.5;
+            s.style.cssText = `
+                width:${size}px; height:${size}px;
+                top:${Math.random() * 100}%;
+                left:${Math.random() * 100}%;
+                --duration:${(Math.random() * 4 + 2).toFixed(1)}s;
+                animation-delay:${(Math.random() * 5).toFixed(1)}s;
+            `;
+            starsContainer.appendChild(s);
+        }
+
+        // ── Floating hearts ─────────────────────────────────────────────────────────────────────
+        const heartsContainer = document.getElementById('hearts');
+        const heartChars = ['❤️', '💜', '✨', '💫', '🌟'];
+        for (let i = 0; i < 12; i++) {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            const size = Math.random() * 14 + 10;
+            h.style.cssText = `
+                left:${Math.random() * 100}%;
+                --size:${size}px;
+                --float-dur:${(Math.random() * 6 + 5).toFixed(1)}s;
+                --delay:${(Math.random() * 8).toFixed(1)}s;
+            `;
+            h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+            heartsContainer.appendChild(h);
+        }
+
+        // ── Interactive logic ──────────────────────────────────────────────────────────────────────────
+        let current = 0;
+        const questionEl = document.getElementById('question-text');
+        const btnYes = document.getElementById('btn-yes');
+        const btnNo = document.getElementById('btn-no');
+        const dotsContainer = document.getElementById('progress-dots');
+        const questionScreen = document.getElementById('question-screen');
+        const finalScreen = document.getElementById('final-screen');
+
+        // Build progress dots
+        QUESTIONS.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.id = `dot-${i}`;
+            dotsContainer.appendChild(dot);
+        });
+
+        function showQuestion(index) {
+            questionEl.classList.add('fade-out');
+            setTimeout(() => {
+                questionEl.textContent = QUESTIONS[index];
+                questionEl.classList.remove('fade-out');
+                // Update dots
+                QUESTIONS.forEach((_, i) => {
+                    const dot = document.getElementById(`dot-${i}`);
+                    dot.className = 'dot' + (i < index ? ' done' : i === index ? ' active' : '');
+                });
+                // Reset No button position
+                resetNoButton();
+            }, 400);
+        }
+
+        function resetNoButton() {
+            btnNo.style.top = '';
+            btnNo.style.left = '';
+            btnNo.style.right = '';
+            btnNo.style.bottom = '';
+            btnNo.style.transform = '';
+            btnNo.style.position = 'absolute';
+            btnNo.style.top = '50%';
+            btnNo.style.right = '0';
+            btnNo.style.transform = 'translateY(-50%)';
+        }
+
+        showQuestion(0);
+
+        btnYes.addEventListener('click', () => {
+            current++;
+            if (current >= QUESTIONS.length) {
+                questionScreen.style.display = 'none';
+                finalScreen.classList.add('visible');
+            } else {
+                showQuestion(current);
+            }
+        });
+
+        // No button runs away
+        btnNo.addEventListener('mouseenter', runAway);
+        btnNo.addEventListener('touchstart', runAway, { passive: true });
+
+        function runAway() {
+            const card = document.querySelector('.card');
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = btnNo.getBoundingClientRect();
+
+            const maxX = cardRect.width - btnRect.width - 20;
+            const maxY = cardRect.height - btnRect.height - 20;
+
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+
+            btnNo.style.position = 'absolute';
+            btnNo.style.top = newY + 'px';
+            btnNo.style.left = newX + 'px';
+            btnNo.style.right = 'auto';
+            btnNo.style.transform = 'none';
+        }
+    </script>
 </body>
 </html>
