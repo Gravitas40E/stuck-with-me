@@ -324,8 +324,26 @@ function moveNo(){
   noTip._t = setTimeout(()=>noTip.classList.remove("show"), 1200);
 }
 
-no.addEventListener("mouseenter", moveNo);
-no.addEventListener("touchend", e=>{ e.preventDefault(); moveNo(); }, {passive:false});
+document.addEventListener("mousemove", e=>{
+  const rect = no.getBoundingClientRect();
+
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top + rect.height/2;
+
+  const dx = e.clientX - cx;
+  const dy = e.clientY - cy;
+
+  const dist = Math.sqrt(dx*dx + dy*dy);
+
+  if(dist < 110){
+    moveNo();
+  }
+});
+
+no.addEventListener("touchstart", e=>{
+  e.preventDefault();
+  moveNo();
+},{passive:false});
 
 /* ── heart + sparkle burst ──────────────────────────────── */
 function burst(cx, cy, count=40){
