@@ -3,231 +3,397 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <title>Parvathy.exe</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at top,#21113a 0%,#090912 45%,#020204 100%);
+    font-family:'Inter',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+/* GRID */
+
+body::before{
+    content:'';
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+
+    background-size:40px 40px;
+
+    mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+}
+
+/* GLOWS */
+
+.glow{
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(130px);
+    opacity:0.3;
+    animation:drift 12s ease-in-out infinite alternate;
+}
+
+.glow.one{
+    background:#ff57b0;
+    top:-150px;
+    left:-120px;
+}
+
+.glow.two{
+    background:#6f7dff;
+    bottom:-180px;
+    right:-100px;
+    animation-duration:15s;
+}
+
+@keyframes drift{
+    from{
+        transform:translate(0,0);
+    }
+    to{
+        transform:translate(60px,40px);
+    }
+}
+
+/* PARTICLES */
+
+.particles{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    z-index:0;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:white;
+    opacity:0.3;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(100vh);
+        opacity:0;
     }
 
-    body{
-        min-height:100vh;
-        overflow:hidden;
-        background:
-            radial-gradient(circle at top, #1a1035 0%, #090912 40%, #030308 100%);
-        font-family:'Georgia', serif;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        position:relative;
+    10%{
+        opacity:0.5;
     }
 
-    /* Background grid */
-    body::before{
-        content:'';
-        position:absolute;
-        inset:0;
-        background-image:
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-        background-size:40px 40px;
-        mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
-        z-index:0;
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
+
+/* FLOATING MEMORIES */
+
+.memories{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.memory{
+    position:absolute;
+    color:rgba(255,255,255,0.07);
+    font-size:0.9rem;
+    animation:memoryFloat linear infinite;
+    white-space:nowrap;
+}
+
+@keyframes memoryFloat{
+    from{
+        transform:translateY(20px);
+        opacity:0;
     }
 
-    /* Floating glow */
-    .glow{
-        position:absolute;
-        width:500px;
-        height:500px;
-        border-radius:50%;
-        filter:blur(120px);
-        opacity:0.35;
-        animation:drift 10s ease-in-out infinite alternate;
+    10%{
+        opacity:0.08;
     }
 
-    .glow.one{
-        background:#ff4fd8;
-        top:-150px;
-        left:-100px;
+    90%{
+        opacity:0.08;
     }
 
-    .glow.two{
-        background:#5d7cff;
-        bottom:-180px;
-        right:-120px;
-        animation-duration:14s;
+    to{
+        transform:translateY(-120vh);
+        opacity:0;
+    }
+}
+
+/* CARD */
+
+.card{
+    width:90%;
+    max-width:560px;
+
+    background:rgba(9,11,22,0.7);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:32px;
+
+    padding:3rem 2.5rem;
+
+    position:relative;
+
+    z-index:10;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 0 40px rgba(140,90,255,0.18),
+        0 0 100px rgba(255,90,180,0.12);
+}
+
+/* TOP TAG */
+
+.tag{
+    display:inline-block;
+
+    padding:0.45rem 1rem;
+
+    border-radius:999px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    background:rgba(255,255,255,0.03);
+
+    color:#d7c2ff;
+
+    font-size:0.75rem;
+
+    letter-spacing:0.12em;
+
+    margin-bottom:1.7rem;
+}
+
+/* TITLE */
+
+h1{
+    color:white;
+    font-size:2.2rem;
+    line-height:1.25;
+    margin-bottom:1rem;
+}
+
+.accent{
+    color:#ff9ed9;
+}
+
+/* TEXT */
+
+.text{
+    color:rgba(255,255,255,0.72);
+    line-height:1.9;
+    margin-bottom:2rem;
+    font-size:1rem;
+}
+
+/* WARNING */
+
+.warning{
+    margin-bottom:2rem;
+
+    padding:1rem;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    background:rgba(255,255,255,0.03);
+
+    color:#ffb6e5;
+
+    font-size:0.9rem;
+
+    line-height:1.7;
+}
+
+/* QUESTION */
+
+.question{
+    color:#f5dbff;
+    font-size:1.1rem;
+    line-height:1.7;
+    min-height:80px;
+    margin-bottom:2rem;
+    transition:0.35s;
+}
+
+/* BUTTONS */
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:1rem;
+    min-height:100px;
+    position:relative;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    transition:0.2s ease;
+    font-family:'Inter',sans-serif;
+}
+
+.yes{
+    padding:0.95rem 2.5rem;
+
+    border-radius:999px;
+
+    background:linear-gradient(135deg,#ff5ea8,#7562ff);
+
+    color:white;
+
+    font-size:1rem;
+
+    box-shadow:0 0 25px rgba(255,100,180,0.4);
+}
+
+.yes:hover{
+    transform:scale(1.06);
+}
+
+.no{
+    position:absolute;
+
+    padding:0.85rem 1.7rem;
+
+    border-radius:999px;
+
+    background:transparent;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    color:rgba(255,255,255,0.45);
+}
+
+/* FINAL */
+
+.final{
+    display:none;
+    text-align:center;
+    animation:fadeIn 1s ease;
+}
+
+.final h2{
+    color:#ffd7ef;
+    font-size:2rem;
+    margin-bottom:1rem;
+}
+
+.final p{
+    color:rgba(255,255,255,0.75);
+    line-height:2;
+    margin-bottom:2rem;
+}
+
+.seal{
+    display:inline-block;
+
+    padding:0.8rem 1.5rem;
+
+    border-radius:999px;
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    background:rgba(255,255,255,0.03);
+
+    color:#e0c4ff;
+
+    letter-spacing:0.08em;
+}
+
+/* MEMORY ARCHIVE */
+
+.archive{
+    margin-top:2rem;
+
+    text-align:left;
+
+    border-top:1px solid rgba(255,255,255,0.08);
+
+    padding-top:1.5rem;
+}
+
+.archive-title{
+    color:#ffb6e5;
+    margin-bottom:1rem;
+    font-size:0.9rem;
+    letter-spacing:0.15em;
+}
+
+.archive-line{
+    color:rgba(255,255,255,0.62);
+    margin-bottom:0.8rem;
+    font-size:0.95rem;
+}
+
+/* SECRET */
+
+.secret{
+    margin-top:2rem;
+
+    opacity:0;
+
+    transition:1s ease;
+
+    color:#fff2cf;
+
+    line-height:1.8;
+
+    font-size:0.95rem;
+}
+
+.secret.show{
+    opacity:1;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
     }
 
-    @keyframes drift{
-        from{transform:translate(0,0);}
-        to{transform:translate(50px,40px);}
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
-
-    /* Tiny particles */
-    .particles{
-        position:absolute;
-        inset:0;
-        overflow:hidden;
-        z-index:0;
-    }
-
-    .particle{
-        position:absolute;
-        width:2px;
-        height:2px;
-        background:white;
-        border-radius:50%;
-        opacity:0.4;
-        animation:float linear infinite;
-    }
-
-    @keyframes float{
-        from{
-            transform:translateY(100vh);
-            opacity:0;
-        }
-        10%{opacity:0.5;}
-        to{
-            transform:translateY(-10vh);
-            opacity:0;
-        }
-    }
-
-    /* Main card */
-    .card{
-        width:90%;
-        max-width:520px;
-        background:rgba(8,10,20,0.7);
-        border:1px solid rgba(255,255,255,0.08);
-        backdrop-filter:blur(16px);
-        border-radius:28px;
-        padding:3rem 2.5rem;
-        position:relative;
-        z-index:10;
-        box-shadow:
-            0 0 40px rgba(130,80,255,0.2),
-            0 0 80px rgba(255,70,170,0.15);
-        overflow:hidden;
-    }
-
-    .tag{
-        display:inline-block;
-        padding:0.4rem 1rem;
-        border-radius:999px;
-        border:1px solid rgba(255,255,255,0.1);
-        color:#cbbcff;
-        font-size:0.8rem;
-        letter-spacing:0.08em;
-        margin-bottom:1.8rem;
-        background:rgba(255,255,255,0.03);
-    }
-
-    h1{
-        color:white;
-        font-size:2rem;
-        line-height:1.3;
-        margin-bottom:1rem;
-        text-shadow:0 0 25px rgba(180,130,255,0.4);
-    }
-
-    .accent{
-        color:#ff9ce6;
-    }
-
-    .text{
-        color:rgba(255,255,255,0.72);
-        line-height:1.9;
-        font-size:1rem;
-        margin-bottom:2rem;
-    }
-
-    .question{
-        color:#f0d9ff;
-        font-size:1.15rem;
-        margin-bottom:2rem;
-        transition:0.35s;
-        min-height:60px;
-    }
-
-    .buttons{
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        gap:1rem;
-        position:relative;
-        min-height:90px;
-    }
-
-    button{
-        border:none;
-        cursor:pointer;
-        transition:0.2s ease;
-        font-family:'Georgia', serif;
-    }
-
-    .yes{
-        padding:0.9rem 2.4rem;
-        border-radius:999px;
-        font-size:1rem;
-        color:white;
-        background:linear-gradient(135deg,#ff5ca8,#7b61ff);
-        box-shadow:0 0 25px rgba(255,100,180,0.45);
-    }
-
-    .yes:hover{
-        transform:scale(1.06);
-    }
-
-    .no{
-        position:absolute;
-        padding:0.8rem 1.6rem;
-        border-radius:999px;
-        background:transparent;
-        border:1px solid rgba(255,255,255,0.1);
-        color:rgba(255,255,255,0.4);
-    }
-
-    .final{
-        display:none;
-        text-align:center;
-        animation:fadeIn 1s ease;
-    }
-
-    .final h2{
-        color:#ffd5f3;
-        font-size:2rem;
-        margin-bottom:1rem;
-    }
-
-    .final p{
-        color:rgba(255,255,255,0.75);
-        line-height:2;
-    }
-
-    .final .seal{
-        margin-top:1.8rem;
-        display:inline-block;
-        padding:0.7rem 1.5rem;
-        border-radius:999px;
-        background:rgba(255,255,255,0.05);
-        border:1px solid rgba(255,255,255,0.1);
-        color:#dcbcff;
-        letter-spacing:0.08em;
-    }
-
-    @keyframes fadeIn{
-        from{
-            opacity:0;
-            transform:translateY(10px);
-        }
-        to{
-            opacity:1;
-            transform:translateY(0);
-        }
-    }
+}
 
 </style>
 </head>
@@ -239,126 +405,309 @@
 
 <div class="particles" id="particles"></div>
 
+<div class="memories" id="memories"></div>
+
 <div class="card">
 
-    <div id="main">
-        <div class="tag">UNAUTHORIZED FLIRTING DETECTED</div>
+<div id="main">
 
-        <h1>
-            So, <span class="accent">Parvathy</span>...
-            <br>
-            explain something to me.
-        </h1>
+<div class="tag">
+UNAUTHORIZED EMOTIONAL ATTACHMENT DETECTED
+</div>
 
-        <p class="text">
-            Why do conversations with you feel like accidentally staying awake till 3AM?
-            <br><br>
-            One second it's normal.
-            Then suddenly my brain's replaying your messages like some cursed favorite song.
-        </p>
+<h1>
+So, <span class="accent">Parvathy</span>...
+<br>
+explain something to me.
+</h1>
 
-        <div class="question" id="question">
-            You do realize you're becoming a problem, right?
-        </div>
+<p class="text">
+Somewhere between dark chocolate,
+late night overthinking,
+and telling you to sleep properly...
+<br><br>
+this whole thing became dangerous.
+</p>
 
-        <div class="buttons">
-            <button class="yes" id="yesBtn">Maybe ✨</button>
-            <button class="no" id="noBtn">No</button>
-        </div>
-    </div>
+<div class="warning">
+SYSTEM WARNING:
+<br>
+Emotional attachment levels have exceeded safe operating parameters.
+</div>
 
-    <div class="final" id="final">
-        <h2>Yeah. Thought so.</h2>
+<div class="question" id="question">
+So we're pretending these conversations feel normal?
+</div>
 
-        <p>
-            You're dangerously easy to like.
-            <br><br>
-            At this point you're basically living in my head
-            rent free with premium lighting and surround sound.
-            <br><br>
-            Kinda unfair honestly.
-        </p>
+<div class="buttons">
 
-        <div class="seal">
-            ✦ Certified Distraction ✦
-        </div>
-    </div>
+<button class="yes" id="yesBtn">
+Maybe ✨
+</button>
+
+<button class="no" id="noBtn">
+No
+</button>
+
+</div>
+
+</div>
+
+<div class="final" id="final">
+
+<h2>
+Yeah.
+Thought so.
+</h2>
+
+<p>
+Somehow you went from
+<br>
+"person I talk to"
+<br>
+to
+<br>
+"person my brain checks for automatically."
+<br><br>
+
+And honestly?
+<br><br>
+
+I think the scariest part is that
+talking to you feels peaceful.
+</p>
+
+<div class="seal">
+✦ CERTIFIED DISTRACTION ✦
+</div>
+
+<div class="archive">
+
+<div class="archive-title">
+ARCHIVED INCIDENTS
+</div>
+
+<div class="archive-line">
+▸ The Dark Chocolate Incident
+</div>
+
+<div class="archive-line">
+▸ "Why aren't u asleep?"
+</div>
+
+<div class="archive-line">
+▸ The 3AM Thinking Process
+</div>
+
+<div class="archive-line">
+▸ Certified Distraction Since 2026
+</div>
+
+<div class="archive-line">
+▸ "Sleep well and sweet dreams"
+</div>
+
+<div class="archive-line">
+▸ The Byeeeewwe Protocol
+</div>
+
+</div>
+
+<div class="secret" id="secret">
+Honestly...
+<br><br>
+I don't know where this goes yet.
+<br><br>
+But I know I haven't wanted
+to understand someone this much
+in a very long time.
+</div>
+
+</div>
 
 </div>
 
 <script>
 
-    // Particles
-    const particles = document.getElementById('particles');
+/* PARTICLES */
 
-    for(let i=0;i<90;i++){
-        const p = document.createElement('div');
-        p.classList.add('particle');
+const particles = document.getElementById('particles');
 
-        const size = Math.random()*3 + 1;
+for(let i=0;i<90;i++){
 
-        p.style.width = size + 'px';
-        p.style.height = size + 'px';
-        p.style.left = Math.random()*100 + '%';
-        p.style.animationDuration = (Math.random()*8 + 6) + 's';
-        p.style.animationDelay = Math.random()*6 + 's';
+    const p = document.createElement('div');
 
-        particles.appendChild(p);
+    p.classList.add('particle');
+
+    const size = Math.random()*3 + 1;
+
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+
+    p.style.left = Math.random()*100 + '%';
+
+    p.style.animationDuration =
+        (Math.random()*8 + 6) + 's';
+
+    p.style.animationDelay =
+        Math.random()*6 + 's';
+
+    particles.appendChild(p);
+}
+
+/* FLOATING MEMORIES */
+
+const memories = [
+    "u sure?",
+    "sleep well",
+    "thinking process",
+    "byeeewwe",
+    "why aren't u asleep?",
+    "dark chocolate",
+    "goodnight once again then",
+    "emotionally interesting",
+    "late night conversations",
+    "i felt concerned"
+];
+
+const memoryContainer =
+document.getElementById('memories');
+
+for(let i=0;i<20;i++){
+
+    const m = document.createElement('div');
+
+    m.classList.add('memory');
+
+    m.innerText =
+        memories[Math.floor(Math.random()*memories.length)];
+
+    m.style.left =
+        Math.random()*100 + '%';
+
+    m.style.top =
+        Math.random()*100 + '%';
+
+    m.style.animationDuration =
+        (Math.random()*15 + 12) + 's';
+
+    m.style.animationDelay =
+        Math.random()*8 + 's';
+
+    memoryContainer.appendChild(m);
+}
+
+/* QUESTIONS */
+
+const questions = [
+
+"So we're pretending these conversations feel normal?",
+
+"Why do you somehow appear in my thoughts at 2AM?",
+
+"And now I associate dark chocolate with you. Great.",
+
+"You really had to become emotionally interesting too?",
+
+"So what exactly was your plan here, Parvathy?"
+
+];
+
+let index = 0;
+
+const q =
+document.getElementById('question');
+
+const yesBtn =
+document.getElementById('yesBtn');
+
+const noBtn =
+document.getElementById('noBtn');
+
+yesBtn.addEventListener('click',()=>{
+
+    index++;
+
+    if(index >= questions.length){
+
+        document.getElementById('main')
+        .style.display = 'none';
+
+        document.getElementById('final')
+        .style.display = 'block';
+
+        return;
     }
 
-    const questions = [
-        "You do realize you're becoming a problem, right?",
-        "Like... suspiciously adorable?",
-        "And now I'm supposed to act normal after talking to you?",
-        "That's kinda evil, Parvathy.",
-        "So what now? You planning to stay this cute forever?"
-    ];
+    q.style.opacity = 0;
 
-    let index = 0;
+    setTimeout(()=>{
 
-    const q = document.getElementById('question');
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
+        q.innerText = questions[index];
 
-    yesBtn.addEventListener('click', () => {
+        q.style.opacity = 1;
 
-        index++;
+    },250);
+});
 
-        if(index >= questions.length){
-            document.getElementById('main').style.display = 'none';
-            document.getElementById('final').style.display = 'block';
-            return;
-        }
+/* RUNAWAY BUTTON */
 
-        q.style.opacity = 0;
+function escapeButton(){
 
-        setTimeout(()=>{
-            q.innerText = questions[index];
-            q.style.opacity = 1;
-        },250);
-    });
+    const card =
+    document.querySelector('.card');
 
-    // Runaway no button
-    function escapeButton(){
+    const rect =
+    card.getBoundingClientRect();
 
-        const card = document.querySelector('.card');
-        const rect = card.getBoundingClientRect();
-        const btnRect = noBtn.getBoundingClientRect();
+    const btnRect =
+    noBtn.getBoundingClientRect();
 
-        const maxX = rect.width - btnRect.width - 40;
-        const maxY = rect.height - btnRect.height - 40;
+    const maxX =
+    rect.width - btnRect.width - 40;
 
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
+    const maxY =
+    rect.height - btnRect.height - 40;
 
-        noBtn.style.left = x + 'px';
-        noBtn.style.top = y + 'px';
+    const x =
+    Math.random()*maxX;
+
+    const y =
+    Math.random()*maxY;
+
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+}
+
+noBtn.addEventListener(
+    'mouseenter',
+    escapeButton
+);
+
+noBtn.addEventListener(
+    'touchstart',
+    escapeButton
+);
+
+/* SECRET MESSAGE */
+
+let clicks = 0;
+
+document.getElementById('final')
+.addEventListener('click',()=>{
+
+    clicks++;
+
+    if(clicks >= 5){
+
+        document.getElementById('secret')
+        .classList.add('show');
     }
-
-    noBtn.addEventListener('mouseenter', escapeButton);
-    noBtn.addEventListener('touchstart', escapeButton);
+});
 
 </script>
+
+<!-- yes i remembered the dark chocolate -->
 
 </body>
 </html>
