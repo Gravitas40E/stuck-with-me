@@ -181,6 +181,8 @@ body::before{
     letter-spacing:0.12em;
 
     margin-bottom:1.8rem;
+
+    transition:0.3s ease;
 }
 
 /* TITLE */
@@ -353,37 +355,15 @@ button{
     letter-spacing:0.08em;
 }
 
-/* INCIDENTS */
-
-.incidents{
+.flirty{
 
     margin-top:2rem;
 
-    text-align:left;
+    color:#ffcaea;
 
-    border-top:1px solid rgba(255,255,255,0.08);
+    font-size:1rem;
 
-    padding-top:1.5rem;
-}
-
-.incident-title{
-
-    color:#ffc7ec;
-
-    margin-bottom:1rem;
-
-    font-size:0.85rem;
-
-    letter-spacing:0.15em;
-}
-
-.incident{
-
-    color:rgba(255,255,255,0.68);
-
-    margin-bottom:0.8rem;
-
-    font-size:0.95rem;
+    line-height:1.9;
 }
 
 @keyframes fadeIn{
@@ -413,7 +393,7 @@ button{
 
 <div id="main">
 
-<div class="tag">
+<div class="tag" id="threatTag">
 THREAT LEVEL: MODERATE
 </div>
 
@@ -432,8 +412,7 @@ Including but not limited to:
 <br>
 making normal conversations unnecessarily funny,
 somehow becoming weird motivation fuel,
-and turning random late-night conversations
-into full cinematic experiences.
+and lowkey making me wanna turn my life around.
 </p>
 
 <div class="warning">
@@ -472,10 +451,7 @@ Further investigation has revealed:
 <br><br>
 
 ▸ suspicious levels of emotional damage
-from late-night conversations
-<br><br>
-
-▸ somehow making dark chocolate conversations lore
+from our conversations
 <br><br>
 
 ▸ repeated usage of "byeeewwe"
@@ -488,42 +464,19 @@ without a valid license
 
 ▸ causing me to randomly check my phone
 like a malfunctioning NPC
+<br><br>
+
+▸ somehow becoming one of my favorite people to talk to
 </p>
 
 <div class="seal">
 ✦ CERTIFIED MENACE ✦
 </div>
 
-<div class="incidents">
-
-<div class="incident-title">
-RECORDED INCIDENTS
-</div>
-
-<div class="incident">
-▸ The Dark Chocolate Incident
-</div>
-
-<div class="incident">
-▸ The 3AM Thinking Process
-</div>
-
-<div class="incident">
-▸ The Byeeeewwe Protocol
-</div>
-
-<div class="incident">
-▸ Emotionally Intelligent Stupidity
-</div>
-
-<div class="incident">
-▸ Wrap-Related Chaos
-</div>
-
-<div class="incident">
-▸ Becoming Weird Motivation Fuel
-</div>
-
+<div class="flirty">
+Well...
+<br>
+I don't exactly hate what's happening 😭
 </div>
 
 </div>
@@ -582,6 +535,19 @@ const questions = [
 
 let index = 0;
 
+let threatLevel = 1;
+
+const threatTexts = [
+"THREAT LEVEL: MODERATE",
+"THREAT LEVEL: HIGH",
+"THREAT LEVEL: SEVERE",
+"THREAT LEVEL: CRITICAL",
+"THREAT LEVEL: PARVATHY"
+];
+
+const threatTag =
+document.getElementById('threatTag');
+
 const q =
 document.getElementById('question');
 
@@ -594,6 +560,14 @@ document.getElementById('noBtn');
 yesBtn.addEventListener('click',()=>{
 
     index++;
+
+    if(threatLevel < threatTexts.length-1){
+
+        threatLevel++;
+
+        threatTag.innerText =
+        threatTexts[threatLevel];
+    }
 
     if(index >= questions.length){
 
