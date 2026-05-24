@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>Parvathy.exe</title>
 
@@ -19,12 +19,16 @@
 body{
     min-height:100vh;
     overflow:hidden;
+
     background:
-        radial-gradient(circle at top,#21113a 0%,#090912 45%,#020204 100%);
+    radial-gradient(circle at top,#24133d 0%,#090912 45%,#020204 100%);
+
     font-family:'Inter',sans-serif;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     position:relative;
 }
 
@@ -32,40 +36,50 @@ body{
 
 body::before{
     content:'';
+
     position:absolute;
     inset:0;
 
     background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
 
     background-size:40px 40px;
 
-    mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+    mask-image:
+    radial-gradient(circle at center, black 40%, transparent 90%);
 }
 
-/* GLOWS */
+/* GLOW */
 
 .glow{
     position:absolute;
+
     width:500px;
     height:500px;
+
     border-radius:50%;
+
     filter:blur(130px);
+
     opacity:0.3;
+
     animation:drift 12s ease-in-out infinite alternate;
 }
 
 .glow.one{
-    background:#ff57b0;
-    top:-150px;
+    background:#ff58b5;
+
+    top:-180px;
     left:-120px;
 }
 
 .glow.two{
     background:#6f7dff;
+
     bottom:-180px;
-    right:-100px;
+    right:-120px;
+
     animation-duration:15s;
 }
 
@@ -73,6 +87,7 @@ body::before{
     from{
         transform:translate(0,0);
     }
+
     to{
         transform:translate(60px,40px);
     }
@@ -84,27 +99,32 @@ body::before{
     position:absolute;
     inset:0;
     overflow:hidden;
-    z-index:0;
 }
 
 .particle{
     position:absolute;
+
     width:2px;
     height:2px;
+
     border-radius:50%;
+
     background:white;
+
     opacity:0.3;
+
     animation:float linear infinite;
 }
 
 @keyframes float{
+
     from{
         transform:translateY(100vh);
         opacity:0;
     }
 
     10%{
-        opacity:0.5;
+        opacity:0.4;
     }
 
     to{
@@ -113,24 +133,29 @@ body::before{
     }
 }
 
-/* FLOATING MEMORIES */
+/* FLOATING TEXT */
 
 .memories{
     position:absolute;
     inset:0;
-    pointer-events:none;
     overflow:hidden;
+    pointer-events:none;
 }
 
 .memory{
     position:absolute;
-    color:rgba(255,255,255,0.07);
+
+    color:rgba(255,255,255,0.06);
+
     font-size:0.9rem;
-    animation:memoryFloat linear infinite;
+
     white-space:nowrap;
+
+    animation:memoryFloat linear infinite;
 }
 
 @keyframes memoryFloat{
+
     from{
         transform:translateY(20px);
         opacity:0;
@@ -153,16 +178,17 @@ body::before{
 /* CARD */
 
 .card{
-    width:90%;
-    max-width:560px;
 
-    background:rgba(9,11,22,0.7);
+    width:90%;
+    max-width:580px;
+
+    background:rgba(10,12,22,0.72);
 
     border:1px solid rgba(255,255,255,0.08);
 
     backdrop-filter:blur(18px);
 
-    border-radius:32px;
+    border-radius:30px;
 
     padding:3rem 2.5rem;
 
@@ -173,13 +199,14 @@ body::before{
     overflow:hidden;
 
     box-shadow:
-        0 0 40px rgba(140,90,255,0.18),
-        0 0 100px rgba(255,90,180,0.12);
+    0 0 40px rgba(140,90,255,0.15),
+    0 0 100px rgba(255,90,180,0.12);
 }
 
-/* TOP TAG */
+/* TAG */
 
 .tag{
+
     display:inline-block;
 
     padding:0.45rem 1rem;
@@ -190,65 +217,76 @@ body::before{
 
     background:rgba(255,255,255,0.03);
 
-    color:#d7c2ff;
+    color:#d8c5ff;
 
     font-size:0.75rem;
 
     letter-spacing:0.12em;
 
-    margin-bottom:1.7rem;
+    margin-bottom:1.8rem;
 }
 
 /* TITLE */
 
 h1{
     color:white;
+
     font-size:2.2rem;
-    line-height:1.25;
+
+    line-height:1.3;
+
     margin-bottom:1rem;
 }
 
 .accent{
-    color:#ff9ed9;
+    color:#ff9ad9;
 }
 
 /* TEXT */
 
 .text{
     color:rgba(255,255,255,0.72);
+
     line-height:1.9;
+
     margin-bottom:2rem;
-    font-size:1rem;
 }
 
-/* WARNING */
+/* STATUS */
 
-.warning{
+.status{
+
     margin-bottom:2rem;
 
     padding:1rem;
 
     border-radius:18px;
 
-    border:1px solid rgba(255,255,255,0.08);
-
     background:rgba(255,255,255,0.03);
 
-    color:#ffb6e5;
+    border:1px solid rgba(255,255,255,0.08);
 
-    font-size:0.9rem;
+    color:#ffbce9;
 
     line-height:1.7;
+
+    font-size:0.92rem;
 }
 
 /* QUESTION */
 
 .question{
-    color:#f5dbff;
+
+    color:#f3ddff;
+
     font-size:1.1rem;
+
     line-height:1.7;
+
     min-height:80px;
+
     margin-bottom:2rem;
+
     transition:0.35s;
 }
 
@@ -258,37 +296,47 @@ h1{
     display:flex;
     justify-content:center;
     align-items:center;
+
     gap:1rem;
-    min-height:100px;
+
     position:relative;
+
+    min-height:100px;
 }
 
 button{
     border:none;
+
     cursor:pointer;
+
     transition:0.2s ease;
+
     font-family:'Inter',sans-serif;
 }
 
 .yes{
+
     padding:0.95rem 2.5rem;
 
     border-radius:999px;
 
-    background:linear-gradient(135deg,#ff5ea8,#7562ff);
+    background:
+    linear-gradient(135deg,#ff5fa8,#7563ff);
 
     color:white;
 
     font-size:1rem;
 
-    box-shadow:0 0 25px rgba(255,100,180,0.4);
+    box-shadow:
+    0 0 25px rgba(255,100,180,0.35);
 }
 
 .yes:hover{
-    transform:scale(1.06);
+    transform:scale(1.05);
 }
 
 .no{
+
     position:absolute;
 
     padding:0.85rem 1.7rem;
@@ -306,41 +354,51 @@ button{
 
 .final{
     display:none;
+
     text-align:center;
+
     animation:fadeIn 1s ease;
 }
 
 .final h2{
-    color:#ffd7ef;
+
+    color:#ffd9ef;
+
     font-size:2rem;
+
     margin-bottom:1rem;
 }
 
 .final p{
+
     color:rgba(255,255,255,0.75);
+
     line-height:2;
+
     margin-bottom:2rem;
 }
 
 .seal{
+
     display:inline-block;
 
     padding:0.8rem 1.5rem;
 
     border-radius:999px;
 
-    border:1px solid rgba(255,255,255,0.08);
-
     background:rgba(255,255,255,0.03);
+
+    border:1px solid rgba(255,255,255,0.08);
 
     color:#e0c4ff;
 
     letter-spacing:0.08em;
 }
 
-/* MEMORY ARCHIVE */
+/* ARCHIVE */
 
 .archive{
+
     margin-top:2rem;
 
     text-align:left;
@@ -351,32 +409,38 @@ button{
 }
 
 .archive-title{
-    color:#ffb6e5;
+
+    color:#ffbce9;
+
     margin-bottom:1rem;
-    font-size:0.9rem;
+
+    font-size:0.85rem;
+
     letter-spacing:0.15em;
 }
 
 .archive-line{
-    color:rgba(255,255,255,0.62);
+
+    color:rgba(255,255,255,0.65);
+
     margin-bottom:0.8rem;
+
     font-size:0.95rem;
 }
 
 /* SECRET */
 
 .secret{
+
     margin-top:2rem;
 
     opacity:0;
 
     transition:1s ease;
 
-    color:#fff2cf;
+    color:#fff1c7;
 
     line-height:1.8;
-
-    font-size:0.95rem;
 }
 
 .secret.show{
@@ -384,6 +448,7 @@ button{
 }
 
 @keyframes fadeIn{
+
     from{
         opacity:0;
         transform:translateY(10px);
@@ -412,27 +477,29 @@ button{
 <div id="main">
 
 <div class="tag">
-UNAUTHORIZED EMOTIONAL ATTACHMENT DETECTED
+CLASSIFIED FILE #PV-2026
 </div>
 
 <h1>
 So, <span class="accent">Parvathy</span>...
 <br>
-explain something to me.
+we need to discuss something.
 </h1>
 
 <p class="text">
-Somewhere between dark chocolate,
-late night overthinking,
-and telling you to sleep properly...
+You somehow went from
+"normal person I talk to"
+to
+"why is this person appearing in my thoughts while I'm eating wraps at 1AM?"
 <br><br>
-this whole thing became dangerous.
+
+Frankly this feels irresponsible.
 </p>
 
-<div class="warning">
-SYSTEM WARNING:
+<div class="status">
+CURRENT STATUS:
 <br>
-Emotional attachment levels have exceeded safe operating parameters.
+This situation is becoming emotionally and financially concerning.
 </div>
 
 <div class="question" id="question">
@@ -442,11 +509,11 @@ So we're pretending these conversations feel normal?
 <div class="buttons">
 
 <button class="yes" id="yesBtn">
-Maybe ✨
+Absolutely not ✨
 </button>
 
 <button class="no" id="noBtn">
-No
+Nope
 </button>
 
 </div>
@@ -456,29 +523,30 @@ No
 <div class="final" id="final">
 
 <h2>
-Yeah.
-Thought so.
+Knew it.
 </h2>
 
 <p>
-Somehow you went from
-<br>
-"person I talk to"
-<br>
-to
-<br>
-"person my brain checks for automatically."
+At this point you're basically
+a daily side quest.
 <br><br>
 
-And honestly?
+You somehow became:
 <br><br>
 
-I think the scariest part is that
-talking to you feels peaceful.
+▸ associated with dark chocolate
+<br>
+▸ suspiciously hard to ignore
+<br>
+▸ weirdly funny at night
+<br>
+▸ emotionally interesting
+<br>
+▸ and impossible to uninstall from my brain
 </p>
 
 <div class="seal">
-✦ CERTIFIED DISTRACTION ✦
+✦ CERTIFIED MENACE ✦
 </div>
 
 <div class="archive">
@@ -492,7 +560,7 @@ ARCHIVED INCIDENTS
 </div>
 
 <div class="archive-line">
-▸ "Why aren't u asleep?"
+▸ The "Why Aren't U Asleep?" Arc
 </div>
 
 <div class="archive-line">
@@ -500,27 +568,26 @@ ARCHIVED INCIDENTS
 </div>
 
 <div class="archive-line">
-▸ Certified Distraction Since 2026
-</div>
-
-<div class="archive-line">
-▸ "Sleep well and sweet dreams"
-</div>
-
-<div class="archive-line">
 ▸ The Byeeeewwe Protocol
+</div>
+
+<div class="archive-line">
+▸ Emotionally Intelligent Stupidity
+</div>
+
+<div class="archive-line">
+▸ Certified Distraction Since 2026
 </div>
 
 </div>
 
 <div class="secret" id="secret">
-Honestly...
+okay but genuinely...
 <br><br>
-I don't know where this goes yet.
+talking to you is kinda nice.
 <br><br>
-But I know I haven't wanted
-to understand someone this much
-in a very long time.
+annoying.
+but nice.
 </div>
 
 </div>
@@ -531,68 +598,79 @@ in a very long time.
 
 /* PARTICLES */
 
-const particles = document.getElementById('particles');
+const particles =
+document.getElementById('particles');
 
 for(let i=0;i<90;i++){
 
-    const p = document.createElement('div');
+    const p =
+    document.createElement('div');
 
     p.classList.add('particle');
 
-    const size = Math.random()*3 + 1;
+    const size =
+    Math.random()*3 + 1;
 
-    p.style.width = size + 'px';
-    p.style.height = size + 'px';
+    p.style.width =
+    size + 'px';
 
-    p.style.left = Math.random()*100 + '%';
+    p.style.height =
+    size + 'px';
+
+    p.style.left =
+    Math.random()*100 + '%';
 
     p.style.animationDuration =
-        (Math.random()*8 + 6) + 's';
+    (Math.random()*8 + 6) + 's';
 
     p.style.animationDelay =
-        Math.random()*6 + 's';
+    Math.random()*6 + 's';
 
     particles.appendChild(p);
 }
 
 /* FLOATING MEMORIES */
 
-const memories = [
-    "u sure?",
-    "sleep well",
-    "thinking process",
-    "byeeewwe",
-    "why aren't u asleep?",
-    "dark chocolate",
-    "goodnight once again then",
-    "emotionally interesting",
-    "late night conversations",
-    "i felt concerned"
-];
-
 const memoryContainer =
 document.getElementById('memories');
 
-for(let i=0;i<20;i++){
+const memories = [
 
-    const m = document.createElement('div');
+    "dark chocolate",
+    "why aren't u asleep?",
+    "thinking process",
+    "byeeewwe",
+    "u sure?",
+    "sleep properly",
+    "emotionally interesting",
+    "late night conversations",
+    "goodnighttt",
+    "hehe ty"
+];
+
+for(let i=0;i<22;i++){
+
+    const m =
+    document.createElement('div');
 
     m.classList.add('memory');
 
     m.innerText =
-        memories[Math.floor(Math.random()*memories.length)];
+    memories[
+        Math.floor(Math.random()*memories.length)
+    ];
 
     m.style.left =
-        Math.random()*100 + '%';
+    Math.random()*100 + '%';
 
     m.style.top =
-        Math.random()*100 + '%';
+    Math.random()*100 + '%';
 
     m.style.animationDuration =
-        (Math.random()*15 + 12) + 's';
+    (Math.random()*16 + 10) + 's';
 
     m.style.animationDelay =
-        Math.random()*8 + 's';
+    Math.random()*10 + 's';
 
     memoryContainer.appendChild(m);
 }
@@ -603,14 +681,13 @@ const questions = [
 
 "So we're pretending these conversations feel normal?",
 
-"Why do you somehow appear in my thoughts at 2AM?",
-
-"And now I associate dark chocolate with you. Great.",
+"Why do I now associate dark chocolate with you?",
 
 "You really had to become emotionally interesting too?",
 
-"So what exactly was your plan here, Parvathy?"
+"So what exactly was your long-term strategy here?",
 
+"And now I'm supposed to act normal after all this?"
 ];
 
 let index = 0;
@@ -675,8 +752,11 @@ function escapeButton(){
     const y =
     Math.random()*maxY;
 
-    noBtn.style.left = x + 'px';
-    noBtn.style.top = y + 'px';
+    noBtn.style.left =
+    x + 'px';
+
+    noBtn.style.top =
+    y + 'px';
 }
 
 noBtn.addEventListener(
