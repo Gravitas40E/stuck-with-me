@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parvathy.exe</title>
+<title>Parvathy Malware Detected</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -41,8 +41,8 @@ body::before{
     inset:0;
 
     background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
 
     background-size:40px 40px;
 
@@ -68,14 +68,14 @@ body::before{
 }
 
 .glow.one{
-    background:#ff58b5;
+    background:#ff5eb5;
 
     top:-180px;
     left:-120px;
 }
 
 .glow.two{
-    background:#6f7dff;
+    background:#6d7dff;
 
     bottom:-180px;
     right:-120px;
@@ -98,7 +98,6 @@ body::before{
 .particles{
     position:absolute;
     inset:0;
-    overflow:hidden;
 }
 
 .particle{
@@ -133,56 +132,14 @@ body::before{
     }
 }
 
-/* FLOATING TEXT */
-
-.memories{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-}
-
-.memory{
-    position:absolute;
-
-    color:rgba(255,255,255,0.06);
-
-    font-size:0.9rem;
-
-    white-space:nowrap;
-
-    animation:memoryFloat linear infinite;
-}
-
-@keyframes memoryFloat{
-
-    from{
-        transform:translateY(20px);
-        opacity:0;
-    }
-
-    10%{
-        opacity:0.08;
-    }
-
-    90%{
-        opacity:0.08;
-    }
-
-    to{
-        transform:translateY(-120vh);
-        opacity:0;
-    }
-}
-
 /* CARD */
 
 .card{
 
     width:90%;
-    max-width:580px;
+    max-width:560px;
 
-    background:rgba(10,12,22,0.72);
+    background:rgba(11,12,24,0.72);
 
     border:1px solid rgba(255,255,255,0.08);
 
@@ -200,7 +157,7 @@ body::before{
 
     box-shadow:
     0 0 40px rgba(140,90,255,0.15),
-    0 0 100px rgba(255,90,180,0.12);
+    0 0 100px rgba(255,90,180,0.08);
 }
 
 /* TAG */
@@ -231,7 +188,7 @@ body::before{
 h1{
     color:white;
 
-    font-size:2.2rem;
+    font-size:2.1rem;
 
     line-height:1.3;
 
@@ -245,6 +202,7 @@ h1{
 /* TEXT */
 
 .text{
+
     color:rgba(255,255,255,0.72);
 
     line-height:1.9;
@@ -252,9 +210,9 @@ h1{
     margin-bottom:2rem;
 }
 
-/* STATUS */
+/* WARNING */
 
-.status{
+.warning{
 
     margin-bottom:2rem;
 
@@ -266,7 +224,7 @@ h1{
 
     border:1px solid rgba(255,255,255,0.08);
 
-    color:#ffbce9;
+    color:#ffc7ec;
 
     line-height:1.7;
 
@@ -277,13 +235,13 @@ h1{
 
 .question{
 
-    color:#f3ddff;
+    color:#f2dcff;
 
-    font-size:1.1rem;
+    font-size:1.08rem;
 
     line-height:1.7;
 
-    min-height:80px;
+    min-height:70px;
 
     margin-bottom:2rem;
 
@@ -293,11 +251,10 @@ h1{
 /* BUTTONS */
 
 .buttons{
+
     display:flex;
     justify-content:center;
     align-items:center;
-
-    gap:1rem;
 
     position:relative;
 
@@ -321,7 +278,7 @@ button{
     border-radius:999px;
 
     background:
-    linear-gradient(135deg,#ff5fa8,#7563ff);
+    linear-gradient(135deg,#ff61aa,#7564ff);
 
     color:white;
 
@@ -347,12 +304,13 @@ button{
 
     border:1px solid rgba(255,255,255,0.08);
 
-    color:rgba(255,255,255,0.45);
+    color:rgba(255,255,255,0.4);
 }
 
 /* FINAL */
 
 .final{
+
     display:none;
 
     text-align:center;
@@ -362,7 +320,7 @@ button{
 
 .final h2{
 
-    color:#ffd9ef;
+    color:#ffd8ef;
 
     font-size:2rem;
 
@@ -395,9 +353,9 @@ button{
     letter-spacing:0.08em;
 }
 
-/* ARCHIVE */
+/* INCIDENTS */
 
-.archive{
+.incidents{
 
     margin-top:2rem;
 
@@ -408,9 +366,9 @@ button{
     padding-top:1.5rem;
 }
 
-.archive-title{
+.incident-title{
 
-    color:#ffbce9;
+    color:#ffc7ec;
 
     margin-bottom:1rem;
 
@@ -419,32 +377,13 @@ button{
     letter-spacing:0.15em;
 }
 
-.archive-line{
+.incident{
 
-    color:rgba(255,255,255,0.65);
+    color:rgba(255,255,255,0.68);
 
     margin-bottom:0.8rem;
 
     font-size:0.95rem;
-}
-
-/* SECRET */
-
-.secret{
-
-    margin-top:2rem;
-
-    opacity:0;
-
-    transition:1s ease;
-
-    color:#fff1c7;
-
-    line-height:1.8;
-}
-
-.secret.show{
-    opacity:1;
 }
 
 @keyframes fadeIn{
@@ -470,50 +409,52 @@ button{
 
 <div class="particles" id="particles"></div>
 
-<div class="memories" id="memories"></div>
-
 <div class="card">
 
 <div id="main">
 
 <div class="tag">
-CLASSIFIED FILE #PV-2026
+THREAT LEVEL: MODERATE
 </div>
 
 <h1>
-So, <span class="accent">Parvathy</span>...
-<br>
-we need to discuss something.
+Attention,
+<span class="accent">Parvathy</span>.
 </h1>
 
 <p class="text">
-You somehow went from
-"normal person I talk to"
-to
-"why is this person appearing in my thoughts while I'm eating wraps at 1AM?"
+After careful investigation,
+I have come to the conclusion that
+you are responsible for several suspicious activities.
 <br><br>
 
-Frankly this feels irresponsible.
+Including but not limited to:
+<br>
+making normal conversations unnecessarily funny,
+ruining dark chocolate permanently,
+and somehow making "why aren't u asleep"
+a recurring event.
 </p>
 
-<div class="status">
-CURRENT STATUS:
+<div class="warning">
+SYSTEM REPORT:
 <br>
-This situation is becoming emotionally and financially concerning.
+Subject has become a daily occurrence in brain activity.
+Researchers are concerned.
 </div>
 
 <div class="question" id="question">
-So we're pretending these conversations feel normal?
+Do you deny these allegations?
 </div>
 
 <div class="buttons">
 
 <button class="yes" id="yesBtn">
-Absolutely not ✨
+No comment ✨
 </button>
 
 <button class="no" id="noBtn">
-Nope
+Absolutely
 </button>
 
 </div>
@@ -523,71 +464,62 @@ Nope
 <div class="final" id="final">
 
 <h2>
-Knew it.
+Yeah that's what I thought.
 </h2>
 
 <p>
-At this point you're basically
-a daily side quest.
+Further investigation has revealed:
 <br><br>
 
-You somehow became:
+▸ suspicious levels of emotional damage
+from late-night conversations
 <br><br>
 
-▸ associated with dark chocolate
-<br>
-▸ suspiciously hard to ignore
-<br>
-▸ weirdly funny at night
-<br>
-▸ emotionally interesting
-<br>
-▸ and impossible to uninstall from my brain
+▸ permanent association with dark chocolate
+<br><br>
+
+▸ repeated usage of "byeeewwe"
+without government approval
+<br><br>
+
+▸ causing me to randomly check my phone
+like a malfunctioning NPC
 </p>
 
 <div class="seal">
 ✦ CERTIFIED MENACE ✦
 </div>
 
-<div class="archive">
+<div class="incidents">
 
-<div class="archive-title">
-ARCHIVED INCIDENTS
+<div class="incident-title">
+RECORDED INCIDENTS
 </div>
 
-<div class="archive-line">
+<div class="incident">
 ▸ The Dark Chocolate Incident
 </div>
 
-<div class="archive-line">
+<div class="incident">
 ▸ The "Why Aren't U Asleep?" Arc
 </div>
 
-<div class="archive-line">
+<div class="incident">
 ▸ The 3AM Thinking Process
 </div>
 
-<div class="archive-line">
+<div class="incident">
 ▸ The Byeeeewwe Protocol
 </div>
 
-<div class="archive-line">
+<div class="incident">
 ▸ Emotionally Intelligent Stupidity
 </div>
 
-<div class="archive-line">
-▸ Certified Distraction Since 2026
+<div class="incident">
+▸ Wrap-Related Chaos
 </div>
 
-</div>
-
-<div class="secret" id="secret">
-okay but genuinely...
-<br><br>
-talking to you is kinda nice.
-<br><br>
-annoying.
-but nice.
 </div>
 
 </div>
@@ -629,65 +561,19 @@ for(let i=0;i<90;i++){
     particles.appendChild(p);
 }
 
-/* FLOATING MEMORIES */
-
-const memoryContainer =
-document.getElementById('memories');
-
-const memories = [
-
-    "dark chocolate",
-    "why aren't u asleep?",
-    "thinking process",
-    "byeeewwe",
-    "u sure?",
-    "sleep properly",
-    "emotionally interesting",
-    "late night conversations",
-    "goodnighttt",
-    "hehe ty"
-];
-
-for(let i=0;i<22;i++){
-
-    const m =
-    document.createElement('div');
-
-    m.classList.add('memory');
-
-    m.innerText =
-    memories[
-        Math.floor(Math.random()*memories.length)
-    ];
-
-    m.style.left =
-    Math.random()*100 + '%';
-
-    m.style.top =
-    Math.random()*100 + '%';
-
-    m.style.animationDuration =
-    (Math.random()*16 + 10) + 's';
-
-    m.style.animationDelay =
-    Math.random()*10 + 's';
-
-    memoryContainer.appendChild(m);
-}
-
 /* QUESTIONS */
 
 const questions = [
 
-"So we're pretending these conversations feel normal?",
+"Do you deny these allegations?",
 
-"Why do I now associate dark chocolate with you?",
+"Why are conversations with you weirdly entertaining?",
 
-"You really had to become emotionally interesting too?",
+"And now I'm supposed to act normal after all this?",
 
-"So what exactly was your long-term strategy here?",
+"Was this your master plan all along?",
 
-"And now I'm supposed to act normal after all this?"
+"Do you enjoy being a menace to society?"
 ];
 
 let index = 0;
@@ -720,7 +606,8 @@ yesBtn.addEventListener('click',()=>{
 
     setTimeout(()=>{
 
-        q.innerText = questions[index];
+        q.innerText =
+        questions[index];
 
         q.style.opacity = 1;
 
@@ -768,22 +655,6 @@ noBtn.addEventListener(
     'touchstart',
     escapeButton
 );
-
-/* SECRET MESSAGE */
-
-let clicks = 0;
-
-document.getElementById('final')
-.addEventListener('click',()=>{
-
-    clicks++;
-
-    if(clicks >= 5){
-
-        document.getElementById('secret')
-        .classList.add('show');
-    }
-});
 
 </script>
 
